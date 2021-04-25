@@ -1,4 +1,4 @@
-FROM php:8-cli-alpine
+FROM php:8-fpm-alpine
 
 MAINTAINER R. Hessing
 
@@ -29,6 +29,7 @@ RUN apk --update add \
         openssh \
         tidyhtml-dev \
         tini \
+        tzdata \
         unzip \
         zip \
     && docker-php-ext-install -j$(nproc) iconv \
@@ -71,8 +72,10 @@ RUN apk --update add \
     && pecl channel-update pecl.php.net \
     && pecl install mcrypt \
     && pecl install redis \
+    && pecl install xdebug \
     && docker-php-ext-enable mcrypt \
     && docker-php-ext-enable redis \
+    && docker-php-ext-enable xdebug \
     && composer self-update --2 \
     && apk del --no-cache \
       g++ \
@@ -82,8 +85,27 @@ RUN apk --update add \
     # Always refresh keys
     && rm -rf /etc/ssh/ssh_host_rsa_key /etc/ssh/ssh_host_dsa_key
 
+# Set default timezone to UTC
+ENV TZ=Etc/UTC
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
+    && echo $TZ > /etc/timezone
+    && printf '[PHP]\ndate.timezone = "${TZ}"\n' > /usr/local/etc/php/conf.d/tzone.ini
+
+# Configure XDebug using tags to be filled in during start
+RUN echo "zend_extension = $(find /usr/local/lib/php/extensions/ -name xdebug.so)" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "error_reporting = __ERROR_REPORTING__" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "display_startup_errors = __DISPLAY_STARTUP_ERRORS__" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "display_errors = __DISPLAY_ERRORS__" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "xdebug.file_link_format = __FILE_LINK_FORMAT__" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "xdebug.idekey = \"__IDEKEY__\"" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "xdebug.remote_port = __REMOTE_PORT__" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "xdebug.remote_enable = __REMOTE_ENABLE__" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "xdebug.remote_autostart = __REMOTE_AUTOSTART__" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "xdebug.remote_host = __REMOTE_HOST__" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+
 COPY docker-entrypoint.sh /usr/local/bin/
 RUN mkdir -p /var/www \
+    && touch /root/.ssh/authorized_keys \
     && chmod 755 /usr/local/bin/docker-entrypoint.sh
 
 EXPOSE 22
