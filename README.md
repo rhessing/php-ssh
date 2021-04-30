@@ -1,8 +1,7 @@
 # php-ssh
-A PHP CLI & FPM image that includes composer, multiple tools and a SSH server to connect to using Visual Studio Code
+A PHP CLI image that includes composer, multiple tools and a SSH server to connect to using Visual Studio Code
 
 ### Optionally these options can be started:
-- PHP-FPM
 - Xdebug
 - SSH
 
