@@ -102,11 +102,11 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
     && echo "xdebug.remote_autostart = __REMOTE_AUTOSTART__" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
     && echo "xdebug.remote_host = __REMOTE_HOST__" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
+COPY docker-entrypoint.sh /usr/local/bin/
+
 RUN mkdir -p /var/www \
     && chmod 755 /usr/local/bin/docker-entrypoint.sh \
     && addgroup -S php && adduser -S php -G php
-
-COPY docker-entrypoint.sh /usr/local/bin/
 
 USER php
 
