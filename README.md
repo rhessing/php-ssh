@@ -15,7 +15,7 @@ The public key is configured using a bind mount. The location within the contain
 The following environment options may be set, if not set the default values are used.
 
 | Variable  | PHP setting | Default value |
-| ------------- | ------------- |
+| ------------- | ------------- | ------------- |
 | TIMEZONE | date.timezone | Etc/UTC  |
 | ERROR_REPORTING | error_reporting | E_ALL |
 | DISPLAY_ERRORS | display_errors | on |
