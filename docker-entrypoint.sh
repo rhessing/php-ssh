@@ -17,7 +17,7 @@ fi
 
 #create user .ssh dir
 if [ ! -d "/home/php/.ssh" ]; then
-  mkdir -p /home/php/.ssh
+  mkdir -p /home/php/.ssh && chmod 400 /home/php/.ssh
 fi
 
 # Set env controlled variables
