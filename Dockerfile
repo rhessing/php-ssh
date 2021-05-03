@@ -80,8 +80,9 @@ RUN apk --update add \
         tini \
         tzdata \
         unzip \
-        zip \
-    && docker-php-ext-install -j$(nproc) iconv \
+        zip
+
+RUN docker-php-ext-install -j$(nproc) iconv \
     && docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/ \
     && docker-php-ext-install -j$(nproc) gd \
     && docker-php-ext-enable gd \
