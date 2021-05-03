@@ -17,11 +17,11 @@ fi
 
 # Because kubernetes config maps cannot have a defined owner
 # just move authorized_keys.cmap to the correct location and set the correct user
-#if [ -f "/home/php/.ssh/authorized_keys.cmap" ]; then
-#  cp /home/php/.ssh/authorized_keys.cmap /home/php/.ssh/authorized_keys \
-#  && chmod 600 /home/php/.ssh/authorized_keys \
-#  && chown php:php /home/php/.ssh/authorized_keys
-#fi
+if [ -f "/home/php/.ssh/authorized_keys.cmap" ]; then
+  cp /home/php/.ssh/authorized_keys.cmap /home/php/.ssh/authorized_keys \
+  && chmod 600 /home/php/.ssh/authorized_keys \
+  && chown php:php /home/php/.ssh/authorized_keys
+fi
 
 # Set env controlled variables
 TIMEZONE=${TIMEZONE:-Etc/UTC}
