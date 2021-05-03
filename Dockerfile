@@ -4,7 +4,8 @@ MAINTAINER R. Hessing
 # Set default timezone to UTC
 ENV TZ=Etc/UTC
 
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install --no-install-recommends -y \
+        default-mysql-client \
         git \
         libaspell-dev \
         libicu-dev \
@@ -15,13 +16,12 @@ RUN apt-get update && apt-get install -y \
         libmagickwand-dev \
         libmemcached-dev \
         libtidy-dev \
-        default-mysql-client \
         openssh-server \
+        pspell \
         tini \
         unzip \
         zip \
-        zlib1g-dev \
-        --no-install-recommends
+        zlib1g-dev
         
 RUN docker-php-ext-configure pdo_mysql \
     && docker-php-ext-install pdo_mysql \
