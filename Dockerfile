@@ -23,10 +23,7 @@ RUN apt-get update && apt-get install -y \
         zlib1g-dev \
         --no-install-recommends
         
-RUN docker-php-ext-configure mcrypt \
-    && docker-php-ext-install mcrypt \
-    && docker-php-ext-enable mcrypt \
-    && docker-php-ext-configure pdo_mysql \
+RUN docker-php-ext-configure pdo_mysql \
     && docker-php-ext-install pdo_mysql \
     && docker-php-ext-enable pdo_mysql \
     && docker-php-ext-configure mysqli \
