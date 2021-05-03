@@ -6,18 +6,12 @@ ENV TZ=Etc/UTC
 
 RUN apt-get update && apt-get install -y \
         git \
-        gettext \
         libaspell-dev \
-        libbz2-dev \
-        libgmp-dev \
         libicu-dev \
         libmcrypt-dev \
         libunistring-dev \
         libuv1-dev \
         libzip-dev \
-        libfreetype6-dev \
-        libjpeg62-turbo-dev \
-        libpng-dev \
         libmagickwand-dev \
         libmemcached-dev \
         libtidy-dev \
@@ -29,29 +23,7 @@ RUN apt-get update && apt-get install -y \
         zlib1g-dev \
         --no-install-recommends
         
-RUN docker-php-ext-install -j$(nproc) iconv \
-    && docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/ \
-    && docker-php-ext-install -j$(nproc) gd \
-    && docker-php-ext-enable gd \
-    && docker-php-ext-configure bcmath \
-    && docker-php-ext-install -j$(nproc) bcmath \
-    && docker-php-ext-enable bcmath \
-    && docker-php-ext-configure bz2 \
-    && docker-php-ext-install -j$(nproc) bz2 \
-    && docker-php-ext-enable bz2 \
-    && docker-php-ext-configure exif \
-    && docker-php-ext-install -j$(nproc) exif \
-    && docker-php-ext-enable exif \
-    && docker-php-ext-configure gettext \
-    && docker-php-ext-install -j$(nproc) gettext \
-    && docker-php-ext-enable gettext \
-    && docker-php-ext-configure gmp \
-    && docker-php-ext-install -j$(nproc) gmp \
-    && docker-php-ext-enable gmp \
-    && docker-php-ext-configure intl \
-    && docker-php-ext-install -j$(nproc) intl \
-    && docker-php-ext-enable intl \
-    && docker-php-ext-configure mcrypt \
+RUN docker-php-ext-configure mcrypt \
     && docker-php-ext-install mcrypt \
     && docker-php-ext-enable mcrypt \
     && docker-php-ext-configure pdo_mysql \
