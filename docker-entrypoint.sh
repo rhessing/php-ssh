@@ -47,4 +47,4 @@ sed -i "s~__REMOTE_ENABLE__~${REMOTE_ENABLE}~g" /usr/local/etc/php/conf.d/docker
 sed -i "s~__REMOTE_AUTOSTART__~${REMOTE_AUTOSTART}~g" /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 sed -i "s~__REMOTE_HOST__~${REMOTE_HOST}~g" /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
-/usr/sbin/sshd -D
+/usr/sbin/sshd -D -e
