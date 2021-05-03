@@ -107,7 +107,9 @@ COPY docker-entrypoint.sh /usr/local/bin/
 RUN mkdir -p /var/www \
     && chmod 755 /usr/local/bin/docker-entrypoint.sh \
     && addgroup -g 1000 php \
-    && adduser -D -u 1000 -s /bin/sh -G php php
+    && adduser -D -u 1000 -s /bin/sh -G php php \
+    && mkdir -p /home/php/.ssh \
+    && chmod 400 /home/php/.ssh
 
 EXPOSE 22
 ENTRYPOINT ["/sbin/tini", "--"]
