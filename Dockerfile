@@ -5,18 +5,11 @@ MAINTAINER R. Hessing
 ENV TZ=Etc/UTC
 
 RUN apt-get update && apt-get install -y \
-        autoconf \
-        coreutils \
-        g++ \
-        make \
-        composer \
         git \
         gettext \
         libaspell-dev \
         libbz2-dev \
-        libc6-dev \
         libgmp-dev \
-        libgomp1 \
         libicu-dev \
         libmcrypt-dev \
         libunistring-dev \
@@ -25,14 +18,16 @@ RUN apt-get update && apt-get install -y \
         libfreetype6-dev \
         libjpeg62-turbo-dev \
         libpng-dev \
+        libmagickwand-dev \
         libmemcached-dev \
         libtidy-dev \
+        mysql-client \
         openssh-server \
         tini \
-        tzdata \
         unzip \
         zip \
-        zlib1g-dev
+        zlib1g-dev \
+        --no-install-recommends
         
 RUN docker-php-ext-install -j$(nproc) iconv \
     && docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/ \
@@ -56,6 +51,12 @@ RUN docker-php-ext-install -j$(nproc) iconv \
     && docker-php-ext-configure intl \
     && docker-php-ext-install -j$(nproc) intl \
     && docker-php-ext-enable intl \
+    && docker-php-ext-configure mcrypt \
+    && docker-php-ext-install mcrypt \
+    && docker-php-ext-enable mcrypt \
+    && docker-php-ext-configure pdo_mysql \
+    && docker-php-ext-install pdo_mysql \
+    && docker-php-ext-enable pdo_mysql \
     && docker-php-ext-configure mysqli \
     && docker-php-ext-install -j$(nproc) mysqli \
     && docker-php-ext-enable mysqli \
@@ -72,10 +73,12 @@ RUN docker-php-ext-install -j$(nproc) iconv \
     && docker-php-ext-install -j$(nproc) zip \
     && docker-php-ext-enable zip \
     && pecl channel-update pecl.php.net \
+    && pecl install imagick \
     && pecl install mcrypt \
     && pecl install memcached \
     && pecl install redis \
     && pecl install xdebug \
+    && docker-php-ext-enable imagick \
     && docker-php-ext-enable mcrypt \
     && docker-php-ext-enable memcached \
     && docker-php-ext-enable redis \
@@ -86,6 +89,9 @@ RUN docker-php-ext-install -j$(nproc) iconv \
     && rm /var/cache/* \
     # Always refresh keys
     && rm -rf /etc/ssh/ssh_host_rsa_key /etc/ssh/ssh_host_dsa_key
+
+# Install Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
     && echo $TZ > /etc/timezone \
