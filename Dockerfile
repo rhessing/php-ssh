@@ -8,6 +8,7 @@ ENV TZ=Etc/UTC
 RUN apk --update add \
         aspell-dev \
         autoconf \
+        bash \
         bzip2-dev \
         composer \
         coreutils \
@@ -107,7 +108,7 @@ COPY docker-entrypoint.sh /usr/local/bin/
 RUN mkdir -p /var/www \
     && chmod 755 /usr/local/bin/docker-entrypoint.sh \
     && addgroup -g 1000 php \
-    && adduser -D -u 1000 -s /bin/sh -G php php \
+    && adduser -D -u 1000 -s /bin/bash -G php php \
     && passwd -u php \
     && mkdir -p /home/php/.ssh \
     && chown php:php /home/php/.ssh \
