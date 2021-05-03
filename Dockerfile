@@ -64,6 +64,7 @@ RUN apk --update add \
         git \
         gmp-dev \
         icu-dev \
+        libgcc \
         libgomp \
         libintl \
         libjpeg-turbo-dev \
