@@ -14,21 +14,20 @@ RUN apt-get update && apt-get install -y \
         gettext \
         libaspell-dev \
         libbz2-dev \
+        libc6-dev \
         libgmp-dev \
-        libgomp \
+        libgomp1 \
         libicu-dev \
-        libintl \
-        libjpeg-turbo-dev \
         libmcrypt-dev \
-        libunistring \
-        libuv-dev \
+        libunistring-dev \
+        libuv1-dev \
         libzip-dev \
         libfreetype6-dev \
         libjpeg62-turbo-dev \
         libpng-dev \
         libmemcached-dev \
         libtidy-dev \
-        openssh \
+        openssh-server \
         tini \
         tzdata \
         unzip \
