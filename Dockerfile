@@ -21,7 +21,7 @@ RUN apt-get update && apt-get install -y \
         libmagickwand-dev \
         libmemcached-dev \
         libtidy-dev \
-        mysql-client \
+        default-mysql-client \
         openssh-server \
         tini \
         unzip \
