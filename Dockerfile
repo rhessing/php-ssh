@@ -109,6 +109,7 @@ RUN mkdir -p /var/www \
     && addgroup -g 1000 php \
     && adduser -D -u 1000 -s /bin/sh -G php php \
     && mkdir -p /home/php/.ssh \
+    && chown php /home/php/.ssh \
     && chmod 0700 /home/php/.ssh
 
 EXPOSE 22
