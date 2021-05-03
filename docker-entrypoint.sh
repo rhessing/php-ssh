@@ -15,9 +15,12 @@ if [ ! -d "/var/run/sshd" ]; then
   mkdir -p /var/run/sshd
 fi
 
-#create user .ssh dir
-if [ ! -d "/home/php/.ssh" ]; then
-  mkdir -p /home/php/.ssh && chmod 400 /home/php/.ssh
+# Because kubernetes config maps cannot have a defined owner
+# just move authorized_keys.cmap to the correct location and set the correct user
+if [ -f "/home/php/.ssh/authorized_keys.cmap" ]; then
+  cp /home/php/.ssh/authorized_keys.cmap /home/php/.ssh/authorized_keys \
+  && chmod 600 /home/php/.ssh/authorized_keys \
+  && chown php:php /home/php/.ssh/authorized_keys
 fi
 
 # Set env controlled variables
