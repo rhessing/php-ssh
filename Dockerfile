@@ -3,7 +3,16 @@ MAINTAINER R. Hessing
 
 # Set default timezone to UTC
 ENV TZ=Etc/UTC
+ENV TINI_VERSION v0.19.0
 
+# Install tiny
+ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /bin/tini
+ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini.asc /tini.asc
+RUN gpg --batch --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 595E85A6B1B4779EA4DAAEC70B588DFF0527A9B7 \
+ && gpg --batch --verify /tini.asc /bin/tini \
+ && rm -f /tini.asc
+
+# Install requirements for PHP extension build
 RUN apt-get update && apt-get install --no-install-recommends -y \
         default-mysql-client \
         git \
@@ -17,11 +26,11 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
         libmemcached-dev \
         libtidy-dev \
         openssh-server \
-        tini \
         unzip \
         zip \
         zlib1g-dev
-        
+
+# Configure, build and install additional PHP extensions
 RUN docker-php-ext-configure pdo_mysql \
     && docker-php-ext-install pdo_mysql \
     && docker-php-ext-enable pdo_mysql \
@@ -54,6 +63,7 @@ RUN docker-php-ext-configure pdo_mysql \
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
+# Configure PHP
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
     && echo $TZ > /etc/timezone \
     && printf '[PHP]\ndate.timezone = "__TIMEZONE__"\n' > /usr/local/etc/php/conf.d/tzone.ini \
@@ -70,6 +80,8 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
 
 COPY docker-entrypoint.sh /usr/local/bin/
 
+# Create default user 'php'
+# Fix issue with k8s authorized_keys and configmaps
 RUN mkdir -p /var/www \
     && chmod 755 /usr/local/bin/docker-entrypoint.sh \
     && addgroup -gid 1000 php \
@@ -80,6 +92,6 @@ RUN mkdir -p /var/www \
     && chmod 0700 /home/php/.ssh
 
 EXPOSE 22
-ENTRYPOINT ["/sbin/tini", "--"]
+ENTRYPOINT ["/bin/tini", "--"]
 
 CMD ["/usr/local/bin/docker-entrypoint.sh"]
