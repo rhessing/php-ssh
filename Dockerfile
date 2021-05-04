@@ -38,12 +38,10 @@ RUN docker-php-ext-configure pdo_mysql \
     && docker-php-ext-install -j$(nproc) zip \
     && docker-php-ext-enable zip \
     && pecl channel-update pecl.php.net \
-    && pecl install imagick \
     && pecl install mcrypt \
     && pecl install memcached \
     && pecl install redis \
     && pecl install xdebug \
-    && docker-php-ext-enable imagick \
     && docker-php-ext-enable mcrypt \
     && docker-php-ext-enable memcached \
     && docker-php-ext-enable redis \
