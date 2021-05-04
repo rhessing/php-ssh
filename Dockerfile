@@ -5,17 +5,11 @@ MAINTAINER R. Hessing
 ENV TZ=Etc/UTC
 ENV TINI_VERSION v0.19.0
 
-# Install tiny
-ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /bin/tini
-ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini.asc /tini.asc
-RUN gpg --batch --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 595E85A6B1B4779EA4DAAEC70B588DFF0527A9B7 \
- && gpg --batch --verify /tini.asc /bin/tini \
- && rm -f /tini.asc
-
-# Install requirements for PHP extension build
+# Install requirements for Tini and PHP extension builds
 RUN apt-get update && apt-get install --no-install-recommends -y \
         default-mysql-client \
         git \
+        gpg \
         libaspell-dev \
         libicu-dev \
         libmcrypt-dev \
@@ -29,6 +23,13 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
         unzip \
         zip \
         zlib1g-dev
+
+# Install tiny
+ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /bin/tini
+ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini.asc /tini.asc
+RUN gpg --batch --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 595E85A6B1B4779EA4DAAEC70B588DFF0527A9B7 \
+ && gpg --batch --verify /tini.asc /bin/tini \
+ && rm -f /tini.asc
 
 # Configure, build and install additional PHP extensions
 RUN docker-php-ext-configure pdo_mysql \
