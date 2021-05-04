@@ -73,7 +73,7 @@ COPY docker-entrypoint.sh /usr/local/bin/
 RUN mkdir -p /var/www \
     && chmod 755 /usr/local/bin/docker-entrypoint.sh \
     && addgroup -gid 1000 php \
-    && adduser -uid 1000 -gid 1000 --shell /bin/bash php \
+    && adduser -uid 1000 -gid 1000 --shell /bin/bash --disabled-password --gecos '' php \
     && passwd -u php \
     && mkdir -p /home/php/.ssh \
     && chown php:php /home/php/.ssh \
