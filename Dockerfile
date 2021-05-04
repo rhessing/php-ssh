@@ -10,7 +10,6 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
         default-mysql-client \
         dirmngr \
         git \
-        gpg \
         libaspell-dev \
         libicu-dev \
         libmcrypt-dev \
@@ -27,10 +26,6 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
 
 # Install tiny
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /bin/tini
-ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini.asc /tini.asc
-RUN gpg --batch --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 595E85A6B1B4779EA4DAAEC70B588DFF0527A9B7 \
- && gpg --batch --verify /tini.asc /bin/tini \
- && rm -f /tini.asc
 
 # Configure, build and install additional PHP extensions
 RUN docker-php-ext-configure pdo_mysql \
