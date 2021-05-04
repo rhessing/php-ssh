@@ -47,7 +47,7 @@ RUN docker-php-ext-configure pdo_mysql \
     && docker-php-ext-enable redis \
     && docker-php-ext-enable xdebug \
     && rm -rf /tmp/* \
-    && rm /var/cache/* \
+    && rm -rf /var/cache/apt/* \
     # Always refresh keys
     && rm -rf /etc/ssh/ssh_host_rsa_key /etc/ssh/ssh_host_dsa_key
 
