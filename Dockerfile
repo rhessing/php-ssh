@@ -26,6 +26,21 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
 
 # Install tiny
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /bin/tini
+COPY docker-entrypoint.sh /usr/local/bin/
+
+# Install composer
+# Create default user 'php'
+# Fix issue with k8s authorized_keys and configmaps
+RUN chmod 755 /bin/tini \
+    && chmod 755 /usr/local/bin/docker-entrypoint.sh \
+    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+    && mkdir -p /var/www \
+    && addgroup -gid 1000 php \
+    && adduser -uid 1000 -gid 1000 --shell /bin/bash --disabled-password --gecos '' php \
+    && passwd -u php \
+    && mkdir -p /home/php/.ssh \
+    && chown php:php /home/php/.ssh \
+    && chmod 0700 /home/php/.ssh
 
 # Configure, build and install additional PHP extensions
 RUN docker-php-ext-configure pdo_mysql \
@@ -57,9 +72,6 @@ RUN docker-php-ext-configure pdo_mysql \
     # Always refresh keys
     && rm -rf /etc/ssh/ssh_host_rsa_key /etc/ssh/ssh_host_dsa_key
 
-# Install Composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-
 # Configure PHP
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
     && echo $TZ > /etc/timezone \
@@ -74,19 +86,6 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
     && echo "xdebug.remote_enable = __REMOTE_ENABLE__" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
     && echo "xdebug.remote_autostart = __REMOTE_AUTOSTART__" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
     && echo "xdebug.remote_host = __REMOTE_HOST__" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-
-COPY docker-entrypoint.sh /usr/local/bin/
-
-# Create default user 'php'
-# Fix issue with k8s authorized_keys and configmaps
-RUN mkdir -p /var/www \
-    && chmod 755 /usr/local/bin/docker-entrypoint.sh \
-    && addgroup -gid 1000 php \
-    && adduser -uid 1000 -gid 1000 --shell /bin/bash --disabled-password --gecos '' php \
-    && passwd -u php \
-    && mkdir -p /home/php/.ssh \
-    && chown php:php /home/php/.ssh \
-    && chmod 0700 /home/php/.ssh
 
 EXPOSE 22
 ENTRYPOINT ["/bin/tini", "--"]
