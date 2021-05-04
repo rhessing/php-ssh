@@ -17,7 +17,6 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
         libmemcached-dev \
         libtidy-dev \
         openssh-server \
-        pspell \
         tini \
         unzip \
         zip \
@@ -29,9 +28,6 @@ RUN docker-php-ext-configure pdo_mysql \
     && docker-php-ext-configure mysqli \
     && docker-php-ext-install -j$(nproc) mysqli \
     && docker-php-ext-enable mysqli \
-    && docker-php-ext-configure pspell \
-    && docker-php-ext-install -j$(nproc) pspell \
-    && docker-php-ext-enable pspell \
     && docker-php-ext-configure shmop \
     && docker-php-ext-install -j$(nproc) shmop \
     && docker-php-ext-enable shmop \
