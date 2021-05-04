@@ -33,7 +33,7 @@ COPY docker-entrypoint.sh /usr/local/bin/
 # Fix issue with k8s authorized_keys and configmaps
 RUN chmod 755 /bin/tini \
     && chmod 755 /usr/local/bin/docker-entrypoint.sh \
-    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
     && mkdir -p /var/www \
     && addgroup -gid 1000 php \
     && adduser -uid 1000 -gid 1000 --shell /bin/bash --disabled-password --gecos '' php \
