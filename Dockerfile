@@ -8,6 +8,7 @@ ENV TINI_VERSION v0.19.0
 # Install requirements for Tini and PHP extension builds
 RUN apt-get update && apt-get install --no-install-recommends -y \
         default-mysql-client \
+        dirmngr \
         git \
         gpg \
         libaspell-dev \
