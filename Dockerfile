@@ -46,8 +46,6 @@ RUN docker-php-ext-configure pdo_mysql \
     && docker-php-ext-enable memcached \
     && docker-php-ext-enable redis \
     && docker-php-ext-enable xdebug \
-    && composer self-update --2 \
-    && apt-get erase g++ make \
     && rm -rf /tmp/* \
     && rm /var/cache/* \
     # Always refresh keys
