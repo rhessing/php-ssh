@@ -12,7 +12,6 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
         g++ \
         git \
         gettext \
-        libopenal-dev \
         libaspell-dev \
         libpspell-dev \
         libgmp-dev \
@@ -162,9 +161,6 @@ RUN docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu \
 RUN docker-php-ext-configure imap --with-imap-ssl --with-kerberos \
     && docker-php-ext-install imap \
     && docker-php-ext-enable imap
-
-RUN pecl install openal \
-    && docker-php-ext-enable openal
 
 RUN pecl install lzf \
     && docker-php-ext-enable lzf
