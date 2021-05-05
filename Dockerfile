@@ -36,7 +36,10 @@ COPY docker-entrypoint.sh /usr/local/bin/
 # Install composer
 # Create default user 'php'
 # Fix issue with k8s authorized_keys and configmaps
-RUN chmod 755 /bin/tini \
+# Keep SSH connection open
+RUN echo "" >> /etc/ssh/sshd_config \
+    && echo "ClientAliveInterval 3" >> /etc/ssh/sshd_config \
+    && chmod 755 /bin/tini \
     && chmod 755 /usr/local/bin/docker-entrypoint.sh \
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
     && mkdir -p /var/www \
@@ -70,13 +73,12 @@ RUN docker-php-ext-configure zip \
     && docker-php-ext-install -j$(nproc) zip \
     && docker-php-ext-enable zip
 
-RUN docker-php-ext-configure ssh2 \
-    && docker-php-ext-install -j$(nproc) ssh2 \
-    && docker-php-ext-enable ssh2
-
 RUN docker-php-ext-configure imagick \
     && docker-php-ext-install -j$(nproc) imagick \
     && docker-php-ext-enable imagick
+
+RUN pecl install ssh2-1.3.1 \
+    && docker-php-ext-enable ssh2
 
 RUN pecl install quickhash \
     && docker-php-ext-enable quickhash
