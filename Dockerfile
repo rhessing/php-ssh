@@ -26,6 +26,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
         libzip-dev \
         libmagickwand-dev \
         libmemcached-dev \
+        libfbclient2 \
         libtidy-dev \
         openssh-server \
         unzip \
