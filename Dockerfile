@@ -68,9 +68,31 @@ RUN git clone https://github.com/krakjoe/parallel.git \
     && docker-php-ext-enable parallel \
     && cd
 
+# Install imagick for PHP 8
+RUN git clone https://github.com/Imagick/imagick \
+    && cd imagick \
+    && phpize \
+    && ./configure \
+    && make \
+    && make install \
+    && docker-php-ext-enable imagick \
+    && cd
+
 RUN pecl channel-update pecl.php.net
 
 # Configure, build and install additional PHP extensions
+RUN docker-php-ext-configure pcntl \
+    && docker-php-ext-install -j$(nproc) pcntl \
+    && docker-php-ext-enable pcntl
+
+RUN docker-php-ext-configure sockets \
+    && docker-php-ext-install -j$(nproc) sockets \
+    && docker-php-ext-enable sockets
+
+RUN docker-php-ext-configure mhash \
+    && docker-php-ext-install -j$(nproc) mhash \
+    && docker-php-ext-enable mhash
+    
 RUN docker-php-ext-configure bcmath \
     && docker-php-ext-install -j$(nproc) bcmath \
     && docker-php-ext-enable bcmath
@@ -150,6 +172,7 @@ RUN docker-php-ext-enable opcache.so
 RUN rm -rf /tmp/* \
     && rm -rf /var/cache/apt/* \
     && rm -rf /parallel \
+    && rm -rf /imagick \
     # Always refresh keys
     && rm -rf /etc/ssh/ssh_host_rsa_key /etc/ssh/ssh_host_dsa_key
 
