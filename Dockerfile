@@ -22,7 +22,12 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
         openssh-server \
         unzip \
         zip \
-        zlib1g-dev
+        zlib1g-dev \
+        openssl \
+        libssl-dev \
+        libssh2-1-dev \
+        libmagickwand-dev \
+        imagemagick
 
 # Install tiny
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /bin/tini
@@ -65,8 +70,13 @@ RUN docker-php-ext-configure zip \
     && docker-php-ext-install -j$(nproc) zip \
     && docker-php-ext-enable zip
 
-RUN pecl install intl \
-    && docker-php-ext-enable intl
+RUN docker-php-ext-configure ssh2 \
+    && docker-php-ext-install -j$(nproc) ssh2 \
+    && docker-php-ext-enable ssh2
+
+RUN docker-php-ext-configure imagick \
+    && docker-php-ext-install -j$(nproc) imagick \
+    && docker-php-ext-enable imagick
 
 RUN pecl install quickhash \
     && docker-php-ext-enable quickhash
