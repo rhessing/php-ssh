@@ -134,10 +134,6 @@ RUN docker-php-ext-configure pdo_pgsql \
     && docker-php-ext-install pdo_pgsql \
     && docker-php-ext-enable pdo_pgsql
 
-RUN docker-php-ext-configure pdo_sqlsrv \
-    && docker-php-ext-install pdo_sqlsrv \
-    && docker-php-ext-enable pdo_sqlsrv
-
 RUN docker-php-ext-configure mysqli \
     && docker-php-ext-install -j$(nproc) mysqli \
     && docker-php-ext-enable mysqli
