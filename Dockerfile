@@ -15,6 +15,10 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
         libaspell-dev \
         libpspell-dev \
         libgmp-dev \
+        libyaml-dev \
+        libldap2-dev \
+        libxslt1-dev \
+        libxml2-dev \
         libfreetype6-dev \
         libjpeg-dev \
         libjpeg62-turbo-dev \
@@ -37,7 +41,6 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
         libssh2-1-dev \
         libbz2-dev \
         libmagickwand-dev \
-        libldap2-dev \
         libc-client-dev \
         libkrb5-dev \
         imagemagick
@@ -162,14 +165,31 @@ RUN docker-php-ext-configure imap --with-imap-ssl --with-kerberos \
     && docker-php-ext-install imap \
     && docker-php-ext-enable imap
 
+RUN docker-php-ext-configure xsl \
+    && docker-php-ext-install -j$(nproc) xsl \
+    && docker-php-ext-enable xsl
+
+RUN docker-php-ext-configure xml \
+    && docker-php-ext-install -j$(nproc) xml \
+    && docker-php-ext-enable xml
+
+RUN docker-php-ext-configure sysvshm \
+    && docker-php-ext-install -j$(nproc) sysvshm \
+    && docker-php-ext-enable sysvshm
+
+RUN docker-php-ext-configure sysvmsg \
+    && docker-php-ext-install -j$(nproc) sysvmsg \
+    && docker-php-ext-enable sysvmsg
+
+RUN docker-php-ext-configure sysvsem \
+    && docker-php-ext-install -j$(nproc) sysvsem \
+    && docker-php-ext-enable sysvsem
+
 RUN pecl install lzf \
     && docker-php-ext-enable lzf
 
 RUN pecl install rar \
     && docker-php-ext-enable rar
-
-RUN pecl install hrtime \
-    && docker-php-ext-enable hrtime
 
 RUN pecl install ssh2-1.3.1 \
     && docker-php-ext-enable ssh2
@@ -183,11 +203,14 @@ RUN pecl install xlswriter \
 RUN pecl install mcrypt \
     && docker-php-ext-enable mcrypt
 
-RUN pecl install memcached \
-    && docker-php-ext-enable memcached
+RUN pecl install yaml \
+    && docker-php-ext-enable yaml
 
 RUN pecl install redis \
     && docker-php-ext-enable redis
+
+RUN pecl install xdebug \
+    && docker-php-ext-enable xdebug
 
 RUN pecl install xdebug \
     && docker-php-ext-enable xdebug
