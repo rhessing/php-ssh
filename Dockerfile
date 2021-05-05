@@ -27,6 +27,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
         libmemcached-dev \
         libtidy-dev \
         freetds-dev \
+        libsybdb5 \
         openssh-server \
         unzip \
         zip \
