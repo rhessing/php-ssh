@@ -27,6 +27,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
         libmagickwand-dev \
         libmemcached-dev \
         libtidy-dev \
+        libpq-dev \
         openssh-server \
         unzip \
         zip \
