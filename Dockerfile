@@ -59,7 +59,6 @@ RUN git clone https://github.com/krakjoe/parallel.git \
     && phpize \
     && ./configure --enable-parallel  \
     && make \
-    && make test \
     && make install
 
 RUN pecl channel-update pecl.php.net
