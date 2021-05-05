@@ -129,10 +129,6 @@ RUN docker-php-ext-configure pdo_mysql \
     && docker-php-ext-install pdo_mysql \
     && docker-php-ext-enable pdo_mysql
 
-RUN docker-php-ext-configure pdo_odbc \
-    && docker-php-ext-install pdo_odbc \
-    && docker-php-ext-enable pdo_odbc
-
 RUN docker-php-ext-configure pdo_pgsql \
     && docker-php-ext-install pdo_pgsql \
     && docker-php-ext-enable pdo_pgsql
