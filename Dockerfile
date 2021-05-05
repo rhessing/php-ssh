@@ -65,9 +65,6 @@ RUN docker-php-ext-configure zip \
     && docker-php-ext-install -j$(nproc) zip \
     && docker-php-ext-enable zip
 
-RUN pecl install gmagick \
-    && docker-php-ext-enable gmagick
-
 RUN pecl install ssh2 \
     && docker-php-ext-enable ssh2
 
