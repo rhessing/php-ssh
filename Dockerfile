@@ -89,10 +89,6 @@ RUN docker-php-ext-configure sockets \
     && docker-php-ext-install -j$(nproc) sockets \
     && docker-php-ext-enable sockets
 
-RUN docker-php-ext-configure mhash \
-    && docker-php-ext-install -j$(nproc) mhash \
-    && docker-php-ext-enable mhash
-    
 RUN docker-php-ext-configure bcmath \
     && docker-php-ext-install -j$(nproc) bcmath \
     && docker-php-ext-enable bcmath
