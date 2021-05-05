@@ -125,9 +125,6 @@ RUN docker-php-ext-configure pdo_mysql \
     && docker-php-ext-install pdo_mysql \
     && docker-php-ext-enable pdo_mysql
 
-RUN docker-php-ext-install pdo_cubrid \
-    && docker-php-ext-enable pdo_cubrid
-
 RUN docker-php-ext-configure pdo_dblib \
     && docker-php-ext-install pdo_dblib \
     && docker-php-ext-enable pdo_dblib
