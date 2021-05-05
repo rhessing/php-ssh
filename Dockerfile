@@ -59,13 +59,45 @@ RUN docker-php-ext-configure pdo_mysql \
     && docker-php-ext-install -j$(nproc) zip \
     && docker-php-ext-enable zip \
     && pecl channel-update pecl.php.net \
+    && pecl install gmagick \
+    && docker-php-ext-enable gmagick \
+    && pecl install ssh2 \
+    && docker-php-ext-enable ssh2 \
+    && pecl install imagick \
+    && docker-php-ext-enable imagick \
+    && pecl install intl \
+    && docker-php-ext-enable intl \
+    && pecl install quickhash \
+    && docker-php-ext-enable quickhash \
+    && pecl install lchash \
+    && docker-php-ext-enable lchash \
+    && pecl install trader \
+    && docker-php-ext-enable trader \
+    && pecl install pdflib \
+    && docker-php-ext-enable pdflib \
+    && pecl install date_time \
+    && docker-php-ext-enable date_time \
+    && pecl install hrtime \
+    && docker-php-ext-enable hrtime \
+    && pecl install timezonedb \
+    && docker-php-ext-enable timezonedb \
+    && pecl install xdiff \
+    && docker-php-ext-enable xdiff \
+    && pecl install gender \
+    && docker-php-ext-enable gender \
+    && pecl install xlswriter \
+    && docker-php-ext-enable xlswriter \
+    && pecl install pthreads \
+    && docker-php-ext-enable pthreads \
+    && pecl install parallel \
+    && docker-php-ext-enable parallel \
     && pecl install mcrypt \
-    && pecl install memcached \
-    && pecl install redis \
-    && pecl install xdebug \
     && docker-php-ext-enable mcrypt \
+    && pecl install memcached \
     && docker-php-ext-enable memcached \
+    && pecl install redis \
     && docker-php-ext-enable redis \
+    && pecl install xdebug \
     && docker-php-ext-enable xdebug \
     && rm -rf /tmp/* \
     && rm -rf /var/cache/apt/* \
@@ -80,12 +112,12 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
     && echo "error_reporting = __ERROR_REPORTING__" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
     && echo "display_startup_errors = __DISPLAY_STARTUP_ERRORS__" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
     && echo "display_errors = __DISPLAY_ERRORS__" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "xdebug.mode = debug" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
     && echo "xdebug.file_link_format = __FILE_LINK_FORMAT__" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
     && echo "xdebug.idekey = \"__IDEKEY__\"" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
-    && echo "xdebug.remote_port = __REMOTE_PORT__" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
-    && echo "xdebug.remote_enable = __REMOTE_ENABLE__" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
-    && echo "xdebug.remote_autostart = __REMOTE_AUTOSTART__" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
-    && echo "xdebug.remote_host = __REMOTE_HOST__" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+    && echo "xdebug.client_port = __REMOTE_PORT__" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "xdebug.start_with_request = __REMOTE_AUTOSTART__" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "xdebug.client_host = __REMOTE_HOST__" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
 EXPOSE 22
 ENTRYPOINT ["/bin/tini", "--"]
