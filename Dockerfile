@@ -12,6 +12,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
         g++ \
         git \
         gettext \
+        libopenal-dev \
         libaspell-dev \
         libpspell-dev \
         libgmp-dev \
