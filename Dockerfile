@@ -11,6 +11,8 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
         dirmngr \
         git \
         libaspell-dev \
+        libpspell-dev \
+        libgmp-dev \
         libfreetype6-dev \
         libjpeg-dev \
         libjpeg62-turbo-dev \
@@ -72,7 +74,15 @@ RUN docker-php-ext-configure exif \
 RUN docker-php-ext-configure bz2 \
     && docker-php-ext-install -j$(nproc) bz2 \
     && docker-php-ext-enable bz2
-    
+
+RUN docker-php-ext-configure gmp \
+    && docker-php-ext-install -j$(nproc) gmp \
+    && docker-php-ext-enable gmp
+
+RUN docker-php-ext-configure pspell \
+    && docker-php-ext-install -j$(nproc) pspell \
+    && docker-php-ext-enable pspell
+
 RUN docker-php-ext-configure pdo_mysql \
     && docker-php-ext-install pdo_mysql \
     && docker-php-ext-enable pdo_mysql
