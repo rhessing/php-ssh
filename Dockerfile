@@ -83,12 +83,6 @@ RUN docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/i
 RUN pecl install ssh2-1.3.1 \
     && docker-php-ext-enable ssh2
 
-RUN pecl install quickhash \
-    && docker-php-ext-enable quickhash
-
-RUN pecl install lchash \
-    && docker-php-ext-enable lchash
-
 RUN pecl install trader \
     && docker-php-ext-enable trader
 
