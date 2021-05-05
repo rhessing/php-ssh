@@ -27,12 +27,6 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
         libmagickwand-dev \
         libmemcached-dev \
         libtidy-dev \
-        freetds-bin \
-        freetds-dev \
-        freetds-common \
-        libct4 \
-        libsybdb5 \
-        tdsodbc \
         openssh-server \
         unzip \
         zip \
@@ -131,15 +125,10 @@ RUN docker-php-ext-configure calendar \
     && docker-php-ext-install calendar \
     && docker-php-ext-enable calendar
 
-
-
 RUN docker-php-ext-configure pdo_mysql \
     && docker-php-ext-install pdo_mysql \
     && docker-php-ext-enable pdo_mysql
 
-RUN docker-php-ext-configure pdo_dblib \
-    && docker-php-ext-install pdo_dblib \
-    && docker-php-ext-enable pdo_dblib
 
 RUN docker-php-ext-configure pdo_firebird \
     && docker-php-ext-install pdo_firebird \
