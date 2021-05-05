@@ -1,4 +1,4 @@
-FROM php:8-cli-buster
+FROM php:8.0-zts-buster
 MAINTAINER R. Hessing
 
 # Set default timezone to UTC
