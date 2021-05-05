@@ -18,6 +18,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
         libfreetype6-dev \
         libjpeg-dev \
         libjpeg62-turbo-dev \
+        libpng12-dev \
         libicu-dev \
         libmcrypt-dev \
         libunistring-dev \
@@ -26,8 +27,12 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
         libmagickwand-dev \
         libmemcached-dev \
         libtidy-dev \
+        freetds-bin \
         freetds-dev \
+        freetds-common \
+        libct4 \
         libsybdb5 \
+        tdsodbc \
         openssh-server \
         unzip \
         zip \
@@ -37,6 +42,9 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
         libssh2-1-dev \
         libbz2-dev \
         libmagickwand-dev \
+        libldap2-dev \
+        libc-client-dev \
+        libkrb5-dev \
         imagemagick
 
 # Install tiny
@@ -123,6 +131,8 @@ RUN docker-php-ext-configure calendar \
     && docker-php-ext-install calendar \
     && docker-php-ext-enable calendar
 
+
+
 RUN docker-php-ext-configure pdo_mysql \
     && docker-php-ext-install pdo_mysql \
     && docker-php-ext-enable pdo_mysql
@@ -179,6 +189,14 @@ RUN docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/i
     && docker-php-ext-install -j$(nproc) gd \
     && docker-php-ext-enable gd
 
+RUN docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu \
+    && docker-php-ext-install ldap \
+    && docker-php-ext-enable ldap
+
+RUN docker-php-ext-configure imap --with-imap-ssl --with-kerberos \
+    && docker-php-ext-install imap \
+    && docker-php-ext-enable imap
+
 RUN pecl install openal \
     && docker-php-ext-enable openal
 
@@ -217,6 +235,7 @@ RUN docker-php-ext-enable opcache.so
 # Cleanup
 RUN rm -rf /tmp/* \
     && rm -rf /var/cache/apt/* \
+    && rm -rf /var/lib/apt/lists/* \
     && rm -rf /parallel \
     && rm -rf /imagick \
     # Always refresh keys
