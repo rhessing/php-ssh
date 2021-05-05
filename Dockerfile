@@ -65,7 +65,7 @@ RUN git clone https://github.com/krakjoe/parallel.git \
     && ./configure --enable-parallel  \
     && make \
     && make install \
-    && docker-php-ext-enable parallel
+    && docker-php-ext-enable parallel \
     && cd
 
 RUN pecl channel-update pecl.php.net
