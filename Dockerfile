@@ -26,7 +26,6 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
         libzip-dev \
         libmagickwand-dev \
         libmemcached-dev \
-        libfbclient2 \
         libtidy-dev \
         openssh-server \
         unzip \
@@ -129,23 +128,6 @@ RUN docker-php-ext-configure calendar \
 RUN docker-php-ext-configure pdo_mysql \
     && docker-php-ext-install pdo_mysql \
     && docker-php-ext-enable pdo_mysql
-
-
-RUN docker-php-ext-configure pdo_firebird \
-    && docker-php-ext-install pdo_firebird \
-    && docker-php-ext-enable pdo_firebird
-
-RUN docker-php-ext-configure pdo_ibm \
-    && docker-php-ext-install pdo_ibm \
-    && docker-php-ext-enable pdo_ibm
-
-RUN docker-php-ext-configure pdo_informix \
-    && docker-php-ext-install pdo_informix \
-    && docker-php-ext-enable pdo_informix
-
-RUN docker-php-ext-configure pdo_oci \
-    && docker-php-ext-install pdo_oci \
-    && docker-php-ext-enable pdo_oci
 
 RUN docker-php-ext-configure pdo_odbc \
     && docker-php-ext-install pdo_odbc \
