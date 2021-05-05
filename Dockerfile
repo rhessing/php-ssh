@@ -117,9 +117,49 @@ RUN docker-php-ext-configure pspell \
     && docker-php-ext-install -j$(nproc) pspell \
     && docker-php-ext-enable pspell
 
+RUN docker-php-ext-configure calendar \
+    && docker-php-ext-install calendar \
+    && docker-php-ext-enable calendar
+
 RUN docker-php-ext-configure pdo_mysql \
     && docker-php-ext-install pdo_mysql \
     && docker-php-ext-enable pdo_mysql
+
+RUN docker-php-ext-configure pdo_cubrid \
+    && docker-php-ext-install pdo_cubrid \
+    && docker-php-ext-enable pdo_cubrid
+
+RUN docker-php-ext-configure pdo_dblib \
+    && docker-php-ext-install pdo_dblib \
+    && docker-php-ext-enable pdo_dblib
+
+RUN docker-php-ext-configure pdo_firebird \
+    && docker-php-ext-install pdo_firebird \
+    && docker-php-ext-enable pdo_firebird
+
+RUN docker-php-ext-configure pdo_ibm \
+    && docker-php-ext-install pdo_ibm \
+    && docker-php-ext-enable pdo_ibm
+
+RUN docker-php-ext-configure pdo_informix \
+    && docker-php-ext-install pdo_informix \
+    && docker-php-ext-enable pdo_informix
+
+RUN docker-php-ext-configure pdo_oci \
+    && docker-php-ext-install pdo_oci \
+    && docker-php-ext-enable pdo_oci
+
+RUN docker-php-ext-configure pdo_odbc \
+    && docker-php-ext-install pdo_odbc \
+    && docker-php-ext-enable pdo_odbc
+
+RUN docker-php-ext-configure pdo_pgsql \
+    && docker-php-ext-install pdo_pgsql \
+    && docker-php-ext-enable pdo_pgsql
+
+RUN docker-php-ext-configure pdo_sqlsrv \
+    && docker-php-ext-install pdo_sqlsrv \
+    && docker-php-ext-enable pdo_sqlsrv
 
 RUN docker-php-ext-configure mysqli \
     && docker-php-ext-install -j$(nproc) mysqli \
@@ -140,6 +180,18 @@ RUN docker-php-ext-configure zip \
 RUN docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/ \
     && docker-php-ext-install -j$(nproc) gd \
     && docker-php-ext-enable gd
+
+RUN pecl install openal \
+    && docker-php-ext-enable openal
+
+RUN pecl install lzf \
+    && docker-php-ext-enable lzf
+
+RUN pecl install rar \
+    && docker-php-ext-enable rar
+
+RUN pecl install hrtime \
+    && docker-php-ext-enable hrtime
 
 RUN pecl install ssh2-1.3.1 \
     && docker-php-ext-enable ssh2
