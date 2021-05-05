@@ -9,7 +9,9 @@ ENV TINI_VERSION v0.19.0
 RUN apt-get update && apt-get install --no-install-recommends -y \
         default-mysql-client \
         dirmngr \
+        g++ \
         git \
+        gettext \
         libaspell-dev \
         libpspell-dev \
         libgmp-dev \
@@ -62,11 +64,25 @@ RUN git clone https://github.com/krakjoe/parallel.git \
     && phpize \
     && ./configure --enable-parallel  \
     && make \
-    && make install
+    && make install \
+    && docker-php-ext-enable parallel
+    && cd
 
 RUN pecl channel-update pecl.php.net
 
 # Configure, build and install additional PHP extensions
+RUN docker-php-ext-configure bcmath \
+    && docker-php-ext-install -j$(nproc) bcmath \
+    && docker-php-ext-enable bcmath
+
+RUN docker-php-ext-configure gettext \
+    && docker-php-ext-install -j$(nproc) gettext \
+    && docker-php-ext-enable gettext
+
+RUN docker-php-ext-configure intl \
+    && docker-php-ext-install -j$(nproc) intl \
+    && docker-php-ext-enable intl
+
 RUN docker-php-ext-configure exif \
     && docker-php-ext-install -j$(nproc) exif \
     && docker-php-ext-enable exif
@@ -127,10 +143,13 @@ RUN pecl install redis \
 
 RUN pecl install xdebug \
     && docker-php-ext-enable xdebug
-    
+
+RUN docker-php-ext-enable opcache.so
+
 # Cleanup
 RUN rm -rf /tmp/* \
     && rm -rf /var/cache/apt/* \
+    && rm -rf /parallel
     # Always refresh keys
     && rm -rf /etc/ssh/ssh_host_rsa_key /etc/ssh/ssh_host_dsa_key
 
