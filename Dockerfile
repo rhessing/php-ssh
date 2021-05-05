@@ -18,7 +18,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
         libfreetype6-dev \
         libjpeg-dev \
         libjpeg62-turbo-dev \
-        libpng12-dev \
+        libpng-dev \
         libicu-dev \
         libmcrypt-dev \
         libunistring-dev \
