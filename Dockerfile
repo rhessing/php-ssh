@@ -29,6 +29,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
         openssl \
         libssl-dev \
         libssh2-1-dev \
+        libbz2-dev \
         libmagickwand-dev \
         imagemagick
 
@@ -64,6 +65,14 @@ RUN git clone https://github.com/krakjoe/parallel.git \
 RUN pecl channel-update pecl.php.net
 
 # Configure, build and install additional PHP extensions
+RUN docker-php-ext-configure exif \
+    && docker-php-ext-install -j$(nproc) exif \
+    && docker-php-ext-enable exif
+
+RUN docker-php-ext-configure bz2 \
+    && docker-php-ext-install -j$(nproc) bz2 \
+    && docker-php-ext-enable bz2
+    
 RUN docker-php-ext-configure pdo_mysql \
     && docker-php-ext-install pdo_mysql \
     && docker-php-ext-enable pdo_mysql
