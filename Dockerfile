@@ -11,6 +11,9 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
         dirmngr \
         git \
         libaspell-dev \
+        libfreetype6-dev \
+        libjpeg-dev \
+        libjpeg62-turbo-dev \
         libicu-dev \
         libmcrypt-dev \
         libunistring-dev \
@@ -73,8 +76,9 @@ RUN docker-php-ext-configure zip \
     && docker-php-ext-install -j$(nproc) zip \
     && docker-php-ext-enable zip
 
-RUN pecl install imagick \
-    && docker-php-ext-enable imagick
+RUN docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/ \
+    && docker-php-ext-install -j$(nproc) gd \
+    && docker-php-ext-enable gd
 
 RUN pecl install ssh2-1.3.1 \
     && docker-php-ext-enable ssh2
