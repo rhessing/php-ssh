@@ -86,21 +86,6 @@ RUN pecl install ssh2-1.3.1 \
 RUN pecl install trader \
     && docker-php-ext-enable trader
 
-RUN pecl install date_time \
-    && docker-php-ext-enable date_time
-
-RUN pecl install hrtime \
-    && docker-php-ext-enable hrtime
-
-RUN pecl install timezonedb \
-    && docker-php-ext-enable timezonedb
-
-RUN pecl install xdiff \
-    && docker-php-ext-enable xdiff
-
-RUN pecl install gender \
-    && docker-php-ext-enable gender
-
 RUN pecl install xlswriter \
     && docker-php-ext-enable xlswriter
 
