@@ -53,6 +53,15 @@ RUN echo "" >> /etc/ssh/sshd_config \
     && chown php:php /home/php/.ssh \
     && chmod 0700 /home/php/.ssh
 
+# Install parallel for PHP 8
+RUN git clone https://github.com/krakjoe/parallel.git \
+    && cd parallel \
+    && phpize \
+    && ./configure --enable-parallel  \
+    && make \
+    && make test \
+    && make install
+
 RUN pecl channel-update pecl.php.net
 
 # Configure, build and install additional PHP extensions
@@ -88,9 +97,6 @@ RUN pecl install trader \
 
 RUN pecl install xlswriter \
     && docker-php-ext-enable xlswriter
-
-RUN pecl install parallel \
-    && docker-php-ext-enable parallel
 
 RUN pecl install mcrypt \
     && docker-php-ext-enable mcrypt
