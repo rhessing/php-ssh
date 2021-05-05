@@ -86,9 +86,6 @@ RUN pecl install ssh2-1.3.1 \
 RUN pecl install trader \
     && docker-php-ext-enable trader
 
-RUN pecl install pdflib \
-    && docker-php-ext-enable pdflib
-
 RUN pecl install date_time \
     && docker-php-ext-enable date_time
 
