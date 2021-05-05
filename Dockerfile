@@ -149,7 +149,7 @@ RUN docker-php-ext-enable opcache.so
 # Cleanup
 RUN rm -rf /tmp/* \
     && rm -rf /var/cache/apt/* \
-    && rm -rf /parallel
+    && rm -rf /parallel \
     # Always refresh keys
     && rm -rf /etc/ssh/ssh_host_rsa_key /etc/ssh/ssh_host_dsa_key
 
