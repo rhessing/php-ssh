@@ -89,9 +89,6 @@ RUN pecl install trader \
 RUN pecl install xlswriter \
     && docker-php-ext-enable xlswriter
 
-RUN pecl install pthreads \
-    && docker-php-ext-enable pthreads
-
 RUN pecl install parallel \
     && docker-php-ext-enable parallel
 
