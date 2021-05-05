@@ -73,8 +73,7 @@ RUN docker-php-ext-configure zip \
     && docker-php-ext-install -j$(nproc) zip \
     && docker-php-ext-enable zip
 
-RUN docker-php-ext-configure imagick \
-    && docker-php-ext-install -j$(nproc) imagick \
+RUN pecl install imagick \
     && docker-php-ext-enable imagick
 
 RUN pecl install ssh2-1.3.1 \
