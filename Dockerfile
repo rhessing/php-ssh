@@ -42,64 +42,91 @@ RUN chmod 755 /bin/tini \
     && chown php:php /home/php/.ssh \
     && chmod 0700 /home/php/.ssh
 
+RUN pecl channel-update pecl.php.net
+
 # Configure, build and install additional PHP extensions
 RUN docker-php-ext-configure pdo_mysql \
     && docker-php-ext-install pdo_mysql \
-    && docker-php-ext-enable pdo_mysql \
-    && docker-php-ext-configure mysqli \
+    && docker-php-ext-enable pdo_mysql
+
+RUN docker-php-ext-configure mysqli \
     && docker-php-ext-install -j$(nproc) mysqli \
-    && docker-php-ext-enable mysqli \
-    && docker-php-ext-configure shmop \
+    && docker-php-ext-enable mysqli
+
+RUN docker-php-ext-configure shmop \
     && docker-php-ext-install -j$(nproc) shmop \
-    && docker-php-ext-enable shmop \
-    && docker-php-ext-configure tidy \
+    && docker-php-ext-enable shmop
+
+RUN docker-php-ext-configure tidy \
     && docker-php-ext-install -j$(nproc) tidy \
-    && docker-php-ext-enable tidy \
-    && docker-php-ext-configure zip \
+    && docker-php-ext-enable tidy
+
+RUN docker-php-ext-configure zip \
     && docker-php-ext-install -j$(nproc) zip \
-    && docker-php-ext-enable zip \
-    && pecl channel-update pecl.php.net \
-    && pecl install gmagick \
-    && docker-php-ext-enable gmagick \
-    && pecl install ssh2 \
-    && docker-php-ext-enable ssh2 \
-    && pecl install imagick \
-    && docker-php-ext-enable imagick \
-    && pecl install intl \
-    && docker-php-ext-enable intl \
-    && pecl install quickhash \
-    && docker-php-ext-enable quickhash \
-    && pecl install lchash \
-    && docker-php-ext-enable lchash \
-    && pecl install trader \
-    && docker-php-ext-enable trader \
-    && pecl install pdflib \
-    && docker-php-ext-enable pdflib \
-    && pecl install date_time \
-    && docker-php-ext-enable date_time \
-    && pecl install hrtime \
-    && docker-php-ext-enable hrtime \
-    && pecl install timezonedb \
-    && docker-php-ext-enable timezonedb \
-    && pecl install xdiff \
-    && docker-php-ext-enable xdiff \
-    && pecl install gender \
-    && docker-php-ext-enable gender \
-    && pecl install xlswriter \
-    && docker-php-ext-enable xlswriter \
-    && pecl install pthreads \
-    && docker-php-ext-enable pthreads \
-    && pecl install parallel \
-    && docker-php-ext-enable parallel \
-    && pecl install mcrypt \
-    && docker-php-ext-enable mcrypt \
-    && pecl install memcached \
-    && docker-php-ext-enable memcached \
-    && pecl install redis \
-    && docker-php-ext-enable redis \
-    && pecl install xdebug \
-    && docker-php-ext-enable xdebug \
-    && rm -rf /tmp/* \
+    && docker-php-ext-enable zip
+
+RUN pecl install gmagick \
+    && docker-php-ext-enable gmagick
+
+RUN pecl install ssh2 \
+    && docker-php-ext-enable ssh2
+
+RUN pecl install imagick \
+    && docker-php-ext-enable imagick
+
+RUN pecl install intl \
+    && docker-php-ext-enable intl
+
+RUN pecl install quickhash \
+    && docker-php-ext-enable quickhash
+
+RUN pecl install lchash \
+    && docker-php-ext-enable lchash
+
+RUN pecl install trader \
+    && docker-php-ext-enable trader
+
+RUN pecl install pdflib \
+    && docker-php-ext-enable pdflib
+
+RUN pecl install date_time \
+    && docker-php-ext-enable date_time
+
+RUN pecl install hrtime \
+    && docker-php-ext-enable hrtime
+
+RUN pecl install timezonedb \
+    && docker-php-ext-enable timezonedb
+
+RUN pecl install xdiff \
+    && docker-php-ext-enable xdiff
+
+RUN pecl install gender \
+    && docker-php-ext-enable gender
+
+RUN pecl install xlswriter \
+    && docker-php-ext-enable xlswriter
+
+RUN pecl install pthreads \
+    && docker-php-ext-enable pthreads
+
+RUN pecl install parallel \
+    && docker-php-ext-enable parallel
+
+RUN pecl install mcrypt \
+    && docker-php-ext-enable mcrypt
+
+RUN pecl install memcached \
+    && docker-php-ext-enable memcached
+
+RUN pecl install redis \
+    && docker-php-ext-enable redis
+
+RUN pecl install xdebug \
+    && docker-php-ext-enable xdebug
+    
+# Cleanup
+RUN rm -rf /tmp/* \
     && rm -rf /var/cache/apt/* \
     # Always refresh keys
     && rm -rf /etc/ssh/ssh_host_rsa_key /etc/ssh/ssh_host_dsa_key
