@@ -63,7 +63,9 @@ RUN echo "" >> /etc/ssh/sshd_config \
     && adduser -uid 1000 -gid 1000 --shell /bin/bash --disabled-password --gecos '' php \
     && passwd -u php \
     && mkdir -p /home/php/.ssh \
+    && mkdir -p /home/php/.vscode-server \
     && chown php:php /home/php/.ssh \
+    && chown php:php /home/php/.vscode-server \
     && chmod 0700 /home/php/.ssh
 
 # Install parallel for PHP 8
