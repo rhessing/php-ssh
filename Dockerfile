@@ -185,6 +185,10 @@ RUN docker-php-ext-configure sysvsem \
     && docker-php-ext-install -j$(nproc) sysvsem \
     && docker-php-ext-enable sysvsem
 
+RUN docker-php-ext-configure soap \
+    && docker-php-ext-install -j$(nproc) soap \
+    && docker-php-ext-enable soap
+
 RUN pecl install lzf \
     && docker-php-ext-enable lzf
 
@@ -209,10 +213,40 @@ RUN pecl install yaml \
 RUN pecl install redis \
     && docker-php-ext-enable redis
 
-RUN pecl install xdebug \
-    && docker-php-ext-enable xdebug
+RUN pecl install xhprof \
+    && docker-php-ext-enable xhprof
 
-RUN docker-php-ext-enable opcache.so
+RUN pecl install mongodb \
+    && docker-php-ext-enable mongodb
+
+RUN pecl install ast \
+    && docker-php-ext-enable ast
+
+RUN pecl install igbinary \
+    && docker-php-ext-enable igbinary
+
+RUN pecl install ds \
+    && docker-php-ext-enable ds
+
+RUN pecl install msgpack \
+    && docker-php-ext-enable msgpack
+
+RUN pecl install oauth \
+    && docker-php-ext-enable oauth
+
+RUN pecl install pcov \
+    && docker-php-ext-enable pcov
+
+RUN pecl install psr \
+    && docker-php-ext-enable psr
+
+RUN pecl install uuid \
+    && docker-php-ext-enable uuid
+
+RUN pecl install apcu 
+
+# Xdebug will be enabled later on
+RUN pecl install xdebug
 
 # Cleanup
 RUN rm -rf /tmp/* \
