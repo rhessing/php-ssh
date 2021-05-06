@@ -212,9 +212,6 @@ RUN pecl install redis \
 RUN pecl install xdebug \
     && docker-php-ext-enable xdebug
 
-RUN pecl install xdebug \
-    && docker-php-ext-enable xdebug
-
 RUN docker-php-ext-enable opcache.so
 
 # Cleanup
