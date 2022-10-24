@@ -1,4 +1,4 @@
-FROM php:8.0-zts-buster
+FROM php:zts-buster
 MAINTAINER R. Hessing
 
 # Set default timezone to UTC
@@ -59,8 +59,8 @@ RUN echo "" >> /etc/ssh/sshd_config \
     && chmod 755 /usr/local/bin/docker-entrypoint.sh \
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
     && mkdir -p /var/www \
-    && addgroup -gid 1000 php \
-    && adduser -uid 1000 -gid 1000 --shell /bin/bash --disabled-password --gecos '' php \
+    && addgroup -gid 1 php \
+    && adduser -uid 1 -gid 1 --shell /bin/bash --disabled-password --gecos '' php \
     && passwd -u php \
     && mkdir -p /home/php/.ssh \
     && mkdir -p /home/php/.vscode-server \
