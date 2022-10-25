@@ -1,5 +1,7 @@
 # php-sshd
-A PHP CLI image that includes composer, multiple tools and a SSH server to connect to using Visual Studio Code
+A PHP CLI image that includes composer, multiple tools and a SSH server to connect to using Visual Studio Code.
+
+It's meant to be used for development purposes, for example if you want to debug or quickly test some PHP code.
 
 ### Optionally these options can be started:
 - Xdebug
