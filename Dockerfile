@@ -1,4 +1,4 @@
-FROM php:zts-buster
+FROM php:zts-bullseye
 MAINTAINER R. Hessing
 
 # Set default timezone to UTC
