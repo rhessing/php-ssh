@@ -62,8 +62,8 @@ RUN echo "" >> /etc/ssh/sshd_config \
     && mkdir -p /var/app \
     && mkdir -p /var/crawler \
     && mkdir -p /var/parser \
-    && addgroup -gid 1 php \
-    && adduser -uid 1 -gid 1 --shell /bin/bash --disabled-password --gecos '' php \
+    && addgroup -gid 9876 php \
+    && adduser -uid 9876 -gid 9876 --shell /bin/bash --disabled-password --gecos '' php \
     && passwd -u php \
     && mkdir -p /home/php/.ssh \
     && mkdir -p /home/php/.vscode-server \
