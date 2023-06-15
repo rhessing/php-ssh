@@ -197,9 +197,6 @@ RUN docker-php-ext-configure soap \
 RUN pecl install lzf \
     && docker-php-ext-enable lzf
 
-RUN pecl install rar \
-    && docker-php-ext-enable rar
-
 RUN pecl install ssh2-1.3.1 \
     && docker-php-ext-enable ssh2
 
