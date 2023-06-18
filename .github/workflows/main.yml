@@ -3,8 +3,9 @@ name: Docker Image CI
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    paths-ignore:
+      - '.github/'
+      - 'README.md'
 
 env:
   REGISTRY: hub.docker.com
