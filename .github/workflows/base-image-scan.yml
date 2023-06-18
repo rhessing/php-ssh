@@ -2,7 +2,7 @@ name: Check docker base image
 
 on:
   schedule:
-    - cron:  '13 18 * * *'
+    - cron:  '42 13 * * *'
 
 env:
   REGISTRY: hub.docker.com
