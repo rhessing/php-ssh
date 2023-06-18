@@ -58,18 +58,16 @@ RUN echo "" >> /etc/ssh/sshd_config \
     && chmod 755 /bin/tini \
     && chmod 755 /usr/local/bin/docker-entrypoint.sh \
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
-    && mkdir -p /var/www \
-    && mkdir -p /var/app \
-    && mkdir -p /var/crawler \
-    && mkdir -p /var/parser \
-    && addgroup -gid 9876 php \
-    && adduser -uid 9876 -gid 9876 --shell /bin/bash --disabled-password --gecos '' php \
-    && passwd -u php \
-    && mkdir -p /home/php/.ssh \
-    && mkdir -p /home/php/.vscode-server \
-    && chown php:php /home/php/.ssh \
-    && chown php:php /home/php/.vscode-server \
-    && chmod 0700 /home/php/.ssh
+    && mkdir -p /usr/app \
+    && addgroup -gid 9876 dev \
+    && adduser -uid 9876 -gid 9876 --shell /bin/bash --disabled-password --gecos '' dev \
+    && passwd -u dev \
+    && mkdir -p /home/dev/.ssh \
+    && mkdir -p /home/dev/.vscode-server \
+    && chown dev:dev /home/dev/.ssh \
+    && chown dev:dev /home/dev/.vscode-server \
+    && chmod 0700 /home/dev/.ssh \
+    && ln -fsn /home/dev/app /usr/app
 
 # Install parallel for PHP 8
 RUN git clone https://github.com/krakjoe/parallel.git \
